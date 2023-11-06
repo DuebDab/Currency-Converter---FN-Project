@@ -48,5 +48,6 @@ inputbox.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
 dropdown.grid(row=0, column=2, sticky=tk.E, padx=5, pady=5)
 labelOutput.grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
 labelOutput2.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5)
+dropdown2.grid(row=1, column=2, sticky=tk.E, padx=5, pady=5)
 
 root.mainloop()
