@@ -1,43 +1,58 @@
 import requests
 import tkinter as tk
 from ttkwidgets.autocomplete import AutocompleteCombobox
-import urllib, json
 import decimal
 
 #Extraction
-url = "https://openexchangerates.org/api/latest.json?app_id=cfba8a45cda24635a6b429a67e0a0607"
-response = urllib.request.urlopen(url)
-full = json.loads(response.read())
-rates = full["rates"] #Dictionary of all currency exchange USD based
-currencylist = [i for i in rates]
+url = "https://openexchangerates.org/api/latest.json?app_id=cfba8a45cda24635a6b429a67e0a0607"  
+response = requests.get(url)
+if response.status_code == 200:
+    data = response.json()
+    rates = data.get("rates", {})
+    currencylist = list(rates.keys())
 
-class Calculate:
-    def __innit__(self,base,converted):
-        self.base = decimal.Decimal(base)
-        self.converted = decimal.Decimal(converted)
-    def toUSD(self, base):
-        self.base = decimal.Decimal(base)
-        self.converted = round((self.base / decimal.Decimal(rates.get(self))),4)
-        return self.converted
-    def toOTHER(self, base):
-        self.base = decimal.Decimal(base)
-        self.converted = round((self.base * decimal.Decimal(rates.get(self))),4)
-        return self.converted
-
+def toUSD(base):
+    base = decimal.Decimal(base)
+    converted = round((base / decimal.Decimal(rates[dropdown.get()])),4)
+    return converted
+def toOTHER(base):
+    base = decimal.Decimal(base)
+    converted = round((base * decimal.Decimal(rates[dropdown2.get()])),4)
+    return converted
+def choosefun():
+    try: 
+        x = inputbox.get()
+        decimal.Decimal(x)
+        if dropdown.get() == dropdown2.get():
+            labelOutput2['text'] = x
+        elif dropdown.get() == 'USD':
+            labelOutput2['text'] = toOTHER(x)
+        elif dropdown.get() != 'USD':
+            x = toUSD(x)
+            if dropdown2.get() == 'USD':
+                labelOutput2['text'] = x
+            else:
+                labelOutput2['text'] = toOTHER(x)
+    except: 
+            labelOutput2['text'] = 'Invalid input. Enter a number.'
+def switching():
+    x = dropdown.get()
+    y = dropdown2.get()
+    dropdown.set(y)
+    dropdown2.set(x)
+    
 #UI
 root = tk.Tk()
 root.title("Currency Converter")
-root.geometry("500x400")
+root.geometry("500x200")
 root.resizable(height = False, width = False)
-#widgets 
+#Widgets 
 labelInput = tk.Label(root, text = "From:")
 inputbox = tk.Entry(root, width = 30)
 labelOutput = tk.Label(root, text = "To:")
 labelOutput2 = tk.Label(root, textvariable= "")
-
-
-currency = tk.StringVar()
-currency.set("USD")
+button = tk.Button(root, width = 30, text = "Convert", command=choosefun)
+switchbut = tk.Button(root, width = 10, text = "Switch", command=switching)
 
 dropdown = AutocompleteCombobox(width=10, completevalues=currencylist)
 dropdown2 = AutocompleteCombobox(width=10, completevalues=currencylist)
@@ -49,5 +64,7 @@ dropdown.grid(row=0, column=2, sticky=tk.E, padx=5, pady=5)
 labelOutput.grid(row=1, column=0, sticky=tk.E, padx=5, pady=5)
 labelOutput2.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5)
 dropdown2.grid(row=1, column=2, sticky=tk.E, padx=5, pady=5)
+button.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
+switchbut.grid(row=2, column=2, sticky=tk.W, padx=5, pady=5)
 
 root.mainloop()
