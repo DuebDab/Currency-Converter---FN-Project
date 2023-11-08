@@ -40,11 +40,17 @@ def switching():
     y = dropdown2.get()
     dropdown.set(y)
     dropdown2.set(x)
-    
+def meow():
+    if cat["relief"] == "sunken":
+        cat.configure(image=idle, relief="raised")
+    else:
+        cat.configure(image=heart, relief="sunken")
+
+
 #UI
 root = tk.Tk()
 root.title("Currency Converter")
-root.geometry("500x200")
+root.geometry("500x300")
 root.resizable(height = False, width = False)
 #Widgets 
 labelInput = tk.Label(root, text = "From:")
@@ -53,6 +59,12 @@ labelOutput = tk.Label(root, text = "To:")
 labelOutput2 = tk.Label(root, textvariable= "")
 button = tk.Button(root, width = 30, text = "Convert", command=choosefun)
 switchbut = tk.Button(root, width = 10, text = "Switch", command=switching)
+catlabel = tk.Label(root, text = "Emotional support cat, in case you had a bad day.",wraplength=60)
+
+idle = tk.PhotoImage(file='D:\Final Project ER\sprites\idle cat.png')
+heart = tk.PhotoImage(file='D:\Final Project ER\sprites\heart cat.png')
+cat = tk.Button(root, image=idle, relief="raised", command=meow)
+
 
 dropdown = AutocompleteCombobox(width=10, completevalues=currencylist)
 dropdown2 = AutocompleteCombobox(width=10, completevalues=currencylist)
@@ -66,5 +78,7 @@ labelOutput2.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5)
 dropdown2.grid(row=1, column=2, sticky=tk.E, padx=5, pady=5)
 button.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
 switchbut.grid(row=2, column=2, sticky=tk.W, padx=5, pady=5)
+cat.grid(row=3, column=1, sticky=tk.E, padx=5, pady=5)
+catlabel.grid(row=3, column=2, sticky=tk.W, padx=5, pady=5)
 
 root.mainloop()
