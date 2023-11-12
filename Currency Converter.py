@@ -2,6 +2,7 @@ import requests
 import tkinter as tk
 from ttkwidgets.autocomplete import AutocompleteCombobox
 import decimal
+import os
 
 #Extraction
 url = "https://openexchangerates.org/api/latest.json?app_id=cfba8a45cda24635a6b429a67e0a0607"  
@@ -182,8 +183,6 @@ if response.status_code == 200:
     'ZWL': 'Zimbabwean Dollar (2009)'
 }
 
-
-
 def toUSD(base):
     base = decimal.Decimal(base)
     converted = round((base / decimal.Decimal(rates[dropdown.get()])),4)
@@ -240,8 +239,10 @@ searchlabel = tk.Label(root, text = "")
 searchbut = tk.Button(root, width = 10, text = "Search", command=seefull)
 
 
-idle = tk.PhotoImage(file='D:\Final Project ER\sprites\idle cat.png')
-heart = tk.PhotoImage(file='D:\Final Project ER\sprites\heart cat.png')
+idlepath = os.path.join('sprites', 'idle cat.png')
+heartpath = os.path.join('sprites', 'heart cat.png')
+idle = tk.PhotoImage(file=idlepath)
+heart = tk.PhotoImage(file=heartpath)
 cat = tk.Button(root, image=idle, relief="raised", command=meow)
 
 
