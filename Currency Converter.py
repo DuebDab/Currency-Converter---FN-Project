@@ -219,7 +219,10 @@ def meow():
         cat.configure(image=heart, relief="sunken")
 def seefull():
     z = dropdown3.get()
-    searchlabel['text'] = fullname[z]
+    try:
+        searchlabel['text'] = fullname[z]
+    except KeyError:
+        searchlabel['text'] = 'Select a currency.'
 
 
 #UI
