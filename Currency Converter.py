@@ -218,17 +218,21 @@ def meow():
     else:
         cat.configure(image=heart, relief="sunken")
 def seefull():
-    z = dropdown3.get()
+    z = dropdown.get()
+    zz = dropdown2.get()
     try:
         searchlabel['text'] = fullname[z]
     except KeyError:
         searchlabel['text'] = 'Select a currency.'
-
+    try:
+        searchlabel2['text'] = fullname[zz]
+    except KeyError:
+        searchlabel2['text'] = 'Select a currency.'
 
 #UI
 root = tk.Tk()
 root.title("Currency Converter")
-root.geometry("500x300")
+root.geometry("600x300")
 root.resizable(height = False, width = False)
 #Widgets 
 labelInput = tk.Label(root, text = "From:")
@@ -239,7 +243,8 @@ button = tk.Button(root, width = 30, text = "Convert", command=choosefun)
 switchbut = tk.Button(root, width = 10, text = "Switch", command=switching)
 catlabel = tk.Label(root, text = "Emotional support cat, in case you had a bad day.",wraplength=60)
 searchlabel = tk.Label(root, text = "")
-searchbut = tk.Button(root, width = 10, text = "Search", command=seefull)
+searchlabel2 = tk.Label(root, text = "")
+searchbut = tk.Button(root, width = 15, text = "Show Full Name", command=seefull)
 
 
 idlepath = os.path.join('sprites', 'idle cat.png')
@@ -264,8 +269,8 @@ button.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
 switchbut.grid(row=2, column=2, sticky=tk.W, padx=5, pady=5)
 cat.grid(row=3, column=1, sticky=tk.E, padx=5, pady=5)
 catlabel.grid(row=3, column=2, sticky=tk.W, padx=5, pady=5)
-dropdown3.grid(row=4, column=1, sticky=tk.E, padx=5, pady=5)
-searchbut.grid(row=4, column=2, sticky=tk.E, padx=5, pady=5)
-searchlabel.grid(row=4, column=3, sticky=tk.E, padx=5, pady=5)
+searchbut.grid(row=2, column=3, sticky=tk.W, padx=5, pady=5)
+searchlabel.grid(row=0, column=3, sticky=tk.W, padx=5, pady=5)
+searchlabel2.grid(row=1, column=3, sticky=tk.W, padx=5, pady=5)
 
 root.mainloop()
